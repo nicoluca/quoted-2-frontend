@@ -19,6 +19,7 @@ export class QuoteListComponent {
   totalElements: number = 0;
 
   searchMode: boolean = false;
+  keyWord: string = '';
   previousKeyword: string = '';
 
   constructor(private quoteService: QuoteService,
@@ -30,14 +31,18 @@ export class QuoteListComponent {
     this.router.events.subscribe(val => {
       if (val instanceof RoutesRecognized) {
           this.searchMode = val.state.root.firstChild?.params.hasOwnProperty('keyword') ?? false;
+          this.keyWord = val.state.root.firstChild?.params['keyword'] ?? '';
 
-          if (this.searchMode)
-            this.handleSearchQuotes(val.state.root.firstChild?.params['keyword']);
-          else
-            this.handleListQuotes();
+          this.listQuotes();
       }
-  });
+    });
+  }
 
+  listQuotes() {
+    if (this.searchMode)
+      this.handleSearchQuotes(this.keyWord);
+    else
+      this.handleListQuotes();
   }
 
   handleSearchQuotes(keyword: string = '') {
@@ -47,8 +52,6 @@ export class QuoteListComponent {
       this.pageNumber = 1;
 
     this.previousKeyword = keyword;
-
-    console.log(`keyword=${keyword}, pageNumber=${this.pageNumber}`);
 
     this.quoteService.searchPageableQuotes(keyword, this.pageNumber - 1, this.pageSize).subscribe(
       this.processResult()
@@ -68,6 +71,12 @@ export class QuoteListComponent {
       this.pageSize = data.page.size;
       this.totalElements = data.page.totalElements;
     }
+  }
+
+  updatePageSize(size: number) {
+    this.pageSize = size;
+    this.pageNumber = 1;
+    this.listQuotes();
   }
 
 }

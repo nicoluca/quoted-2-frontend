@@ -1,0 +1,19 @@
+<div class="menu-sidebar-content js-scrollbar1">
+    <nav class="navbar-sidebar">
+        <ul class="list-unstyled navbar-list">
+
+                <a routerLink="quotes" routerLinkActive="active-link">
+                    All Sources
+                </a>
+
+            <li *ngFor="let source of sources">
+
+                <a routerLink="quotes/bySource/{{ source.id }}" routerLinkActive="active-link">
+                    {{ source.name }}
+                </a>
+                
+            </li>
+
+        </ul>
+    </nav>
+</div>

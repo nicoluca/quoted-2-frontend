@@ -13,7 +13,7 @@ export class SearchComponent {
 
   search(keyword: string) {
     console.log(`search_value=${keyword}`);
-    this.router.navigate(['/search', keyword]);
+    this.router.navigate(['/quotes/byKeyword', keyword]);
   }
 
 }

@@ -8,11 +8,13 @@ import { SearchComponent } from './components/search/search.component';
 import { Routes, RouterModule } from '@angular/router';
 import { QuoteService } from './services/quote.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SourceMenuComponent } from './components/source-menu/source-menu.component';
 
 
 const routes: Routes = [
-  { path: 'search/:keyword', component: QuoteListComponent },
-  { path: 'search/', component: QuoteListComponent},
+  { path: 'quotes/byKeyword/:keyword', component: QuoteListComponent },
+  { path: 'quotes/byKeyword/', component: QuoteListComponent},
+  { path: 'quotes/bySource/:id', component: QuoteListComponent },
   { path: 'quotes', component: QuoteListComponent },
   { path: '', redirectTo: '/quotes', pathMatch: 'full' },
   { path: '**', redirectTo: '/quotes', pathMatch: 'full'}
@@ -22,7 +24,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     QuoteListComponent,
-    SearchComponent
+    SearchComponent,
+    SourceMenuComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

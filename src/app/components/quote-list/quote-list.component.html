@@ -23,7 +23,10 @@
                                 <ngb-pagination
                                 [(page)]="pageNumber"
                                 [pageSize]="pageSize"
-                                [collectionSize]="totalElements"></ngb-pagination>
+                                [maxSize]="5"
+                                [boundaryLinks]="true"
+                                [collectionSize]="totalElements"
+                                (pageChange)="listQuotes()"></ngb-pagination>
 
                                 <div class="col-md-3 mt-2" style="text-align: right;">
                                     <span class="mr-2">Page Size:</span>

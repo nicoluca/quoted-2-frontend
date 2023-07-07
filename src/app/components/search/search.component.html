@@ -1,0 +1,13 @@
+<form class="form-header" (ngSubmit)="search(searchInput.value)">
+
+    <input #searchInput type="text"
+            class="au-input au-input-xl"
+            placeholder="Search quotes..."
+            (keyup)="search(searchInput.value)" />
+
+    <!-- <button type="button"  (click)="search(searchInput.value)"
+            class="au-btn-submit">
+        Search
+    </button> -->
+
+</form>

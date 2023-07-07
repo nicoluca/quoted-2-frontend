@@ -13,10 +13,16 @@ export class QuoteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPageableQuotes(pageNumber: number, pageSize: number): Observable<GetResponseQuotes> {
-    const quoteUrl = `${this.url}?page=${pageNumber}&size=${pageSize}`;
+  getPageableQuotes(page: number, pageSize: number): Observable<GetResponseQuotes> {
+    const quoteUrl = `${this.url}?page=${page}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
+
+  searchPageableQuotes(keyword: string, page: number, pageSize: number) {
+    const quoteUrl = `${this.url}/search/findByTextContainingIgnoreCase?text=${keyword}&page=${page}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+  }
+
 }
 
 interface GetResponseQuotes {

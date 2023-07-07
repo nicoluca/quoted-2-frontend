@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Quote } from 'src/app/domain/quote';
 import { QuoteService } from 'src/app/services/quote.service';
+import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
+
 
 @Component({
   selector: 'app-quote-list',
@@ -16,15 +18,44 @@ export class QuoteListComponent {
   pageSize: number = 10;
   totalElements: number = 0;
 
-  constructor(private quoteService: QuoteService) {
+  searchMode: boolean = false;
+  previousKeyword: string = '';
+
+  constructor(private quoteService: QuoteService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit(): void {
-    this.getQuotes();
-    console.log(this.quotes);
+    this.router.events.subscribe(val => {
+      if (val instanceof RoutesRecognized) {
+          this.searchMode = val.state.root.firstChild?.params.hasOwnProperty('keyword') ?? false;
+
+          if (this.searchMode)
+            this.handleSearchQuotes(val.state.root.firstChild?.params['keyword']);
+          else
+            this.handleListQuotes();
+      }
+  });
+
   }
 
-  getQuotes() {
+  handleSearchQuotes(keyword: string = '') {
+    console.log(`keyword=${keyword}`);
+
+    if (this.previousKeyword != keyword)
+      this.pageNumber = 1;
+
+    this.previousKeyword = keyword;
+
+    console.log(`keyword=${keyword}, pageNumber=${this.pageNumber}`);
+
+    this.quoteService.searchPageableQuotes(keyword, this.pageNumber - 1, this.pageSize).subscribe(
+      this.processResult()
+    );
+  }
+
+  handleListQuotes() {
     this.quoteService.getPageableQuotes(this.pageNumber - 1, this.pageSize).subscribe(
       this.processResult()
     );
@@ -33,7 +64,7 @@ export class QuoteListComponent {
   processResult() {
     return (data: any) => {
       this.quotes = data._embedded.quotes;
-      this.pageNumber = data.page.number + 1;
+      this.pageNumber = data.page.number + 1; // Spring Data REST pages are 0-based
       this.pageSize = data.page.size;
       this.totalElements = data.page.totalElements;
     }

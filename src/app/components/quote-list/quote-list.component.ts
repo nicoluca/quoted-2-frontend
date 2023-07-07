@@ -18,9 +18,14 @@ export class QuoteListComponent {
   pageSize: number = 10;
   totalElements: number = 0;
 
+  // search properties
   searchMode: boolean = false;
   keyWord: string = '';
   previousKeyword: string = '';
+
+  // filter properties
+  filterMode: boolean = false;
+  sourceId: number = 0;
 
   constructor(private quoteService: QuoteService,
               private route: ActivatedRoute,
@@ -33,6 +38,9 @@ export class QuoteListComponent {
           this.searchMode = val.state.root.firstChild?.params.hasOwnProperty('keyword') ?? false;
           this.keyWord = val.state.root.firstChild?.params['keyword'] ?? '';
 
+          this.filterMode = val.state.root.firstChild?.params.hasOwnProperty('id') ?? false;
+          this.sourceId = val.state.root.firstChild?.params['id'] ?? 0;
+
           this.listQuotes();
       }
     });
@@ -41,6 +49,8 @@ export class QuoteListComponent {
   listQuotes() {
     if (this.searchMode)
       this.handleSearchQuotes(this.keyWord);
+    else if (this.filterMode)
+      this.handleFilterQuotes(this.sourceId);
     else
       this.handleListQuotes();
   }
@@ -54,6 +64,14 @@ export class QuoteListComponent {
     this.previousKeyword = keyword;
 
     this.quoteService.searchPageableQuotes(keyword, this.pageNumber - 1, this.pageSize).subscribe(
+      this.processResult()
+    );
+  }
+
+  handleFilterQuotes(sourceId: number) {
+    console.log(`sourceId=${sourceId}`);
+
+    this.quoteService.filterPageableQuotes(sourceId, this.pageNumber - 1, this.pageSize).subscribe(
       this.processResult()
     );
   }

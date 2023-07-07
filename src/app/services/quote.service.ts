@@ -23,6 +23,11 @@ export class QuoteService {
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
 
+  filterPageableQuotes(sourceId: number, arg1: number, pageSize: number): Observable<GetResponseQuotes> {
+    const quoteUrl = `${this.url}/search/findBySourceId?id=${sourceId}&page=${arg1}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+  }
+
 }
 
 interface GetResponseQuotes {

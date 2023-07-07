@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './components/search/search.component';
 import { Routes, RouterModule } from '@angular/router';
 import { QuoteService } from './services/quote.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 const routes: Routes = [
   { path: 'search/:keyword', component: QuoteListComponent },
@@ -25,7 +27,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes),
     HttpClientModule,
-    BrowserModule
+    BrowserModule,
+    NgbModule
   ],
   providers: [QuoteService],
   bootstrap: [AppComponent]

@@ -20,6 +20,10 @@
                                 
 
                                 <hr>
+                                <ngb-pagination
+                                [(page)]="pageNumber"
+                                [pageSize]="pageSize"
+                                [collectionSize]="totalElements"></ngb-pagination>
 
                                 <div class="col-md-3 mt-2" style="text-align: right;">
                                     <span class="mr-2">Page Size:</span>

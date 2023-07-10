@@ -1,15 +1,33 @@
 <div class="main-content">
     <div class="section-content section-content-p30">
-        <div class="container-fluid">
+            <div class="container-fluid">
 
             <p *ngFor="let quote of quotes">
                 {{ quote.text }} - {{ quote.source.name }}
             </p>
 
+            <div class="container-fluid py-3">
+            <table class="table table-bordered table-hover table-sm">
+                <tr class="thead-dark">
+                    <th scope="col">Quote</th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                <tr *ngFor="let quote of quotes">
+                    <td class="">{{ quote.text }}</td>
+                    <td>{{ quote.source.name }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" (click)="deleteQuote(quote.id)">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
             <!-- if quotes empty then display a message, the '?' is the safe navigation operator -->
             <div *ngIf="quotes?.length == 0" class="alert alert-warning col-md-12" role="alert">
                 No quotes found.
             </div>
+
+            <hr>
 
             <!-- pagination -->
             <div class="footer-pagination">
@@ -17,18 +35,13 @@
                     <div class="col-md-6">
                         <div class="col-md-6">
                             <div class="row">
-                                
 
-                                <hr>
-                                <ngb-pagination
-                                [(page)]="pageNumber"
-                                [pageSize]="pageSize"
-                                [maxSize]="5"
-                                [boundaryLinks]="true"
-                                [collectionSize]="totalElements"
-                                (pageChange)="listQuotes()"></ngb-pagination>
 
-                                <div class="col-md-3 mt-2" style="text-align: right;">
+                                <ngb-pagination [(page)]="pageNumber" [pageSize]="pageSize" [maxSize]="5"
+                                    [boundaryLinks]="true" [collectionSize]="totalElements"
+                                    (pageChange)="listQuotes()"></ngb-pagination>
+
+                                <div class="col-md-8 mt-2" style="text-align: right;">
                                     <span class="mr-2">Page Size:</span>
 
                                     <select #myPageSelect (change)="updatePageSize(+myPageSelect.value)">

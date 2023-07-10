@@ -11,6 +11,7 @@ import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 })
 export class QuoteListComponent {
 
+
   quotes: Quote[] = []
 
   // pagination properties
@@ -95,6 +96,10 @@ export class QuoteListComponent {
     this.pageSize = size;
     this.pageNumber = 1;
     this.listQuotes();
+  }
+
+  deleteQuote(arg0: number) {
+    throw new Error('Method not implemented.');
   }
 
 }

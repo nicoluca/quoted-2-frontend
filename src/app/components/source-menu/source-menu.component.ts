@@ -13,7 +13,7 @@ export class SourceMenuComponent {
 
    // pagination properties
    pageNumber: number = 1;
-   pageSize: number = 10;
+   pageSize: number = 1000; // TODO: Implement actual pagination
    totalElements: number = 0;
 
   constructor(private sourceService: SourceService) { }

@@ -29,9 +29,13 @@ export class QuoteListComponent {
   filterMode: boolean = false;
   sourceId: number = 0;
 
+  // null source properties
+  nullSourceMode: boolean = false;
+
   constructor(private quoteService: QuoteService,
               private route: ActivatedRoute,
               private router: Router) {
+
   }
 
   ngOnInit(): void {
@@ -43,6 +47,8 @@ export class QuoteListComponent {
           this.filterMode = val.state.root.firstChild?.params.hasOwnProperty('id') ?? false;
           this.sourceId = val.state.root.firstChild?.params['id'] ?? 0;
 
+          this.nullSourceMode = val.state.root.firstChild?.params.hasOwnProperty('sourceIsNull') ?? false;
+          
           this.listQuotes();
       }
     });
@@ -53,6 +59,8 @@ export class QuoteListComponent {
       this.handleSearchQuotes(this.keyWord);
     else if (this.filterMode)
       this.handleFilterQuotes(this.sourceId);
+    else if (this.nullSourceMode)
+      this.handleListQuotesWithNullSource();
     else
       this.handleListQuotes();
   }
@@ -74,6 +82,13 @@ export class QuoteListComponent {
     console.log(`sourceId=${sourceId}`);
 
     this.quoteService.filterPageableQuotes(sourceId, this.pageNumber - 1, this.pageSize).subscribe(
+      this.processResult()
+    );
+  }
+
+  handleListQuotesWithNullSource() {
+    console.log('Querying quotes with null source...');
+    this.quoteService.getPageableQuotesWithNullSource(this.pageNumber - 1, this.pageSize).subscribe(
       this.processResult()
     );
   }

@@ -37,6 +37,11 @@ export class QuoteService {
     const quoteUrl = `${this.url}`;
     return this.httpClient.post<Quote>(quoteUrl, { text });
   }
+
+  getPageableQuotesWithNullSource(page: number, pageSize: number): Observable<GetResponseQuotes> {
+    const quoteUrl = `${this.url}/search/findBySourceIsNull?page=${page}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+  }
   
 }
 

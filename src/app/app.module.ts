@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'quotes/byKeyword/:keyword', component: QuoteListComponent },
   { path: 'quotes/byKeyword/', component: QuoteListComponent},
   { path: 'quotes/bySource/:id', component: QuoteListComponent },
+  { path: 'quotes/findBySourceIsNull/:sourceIsNull', component: QuoteListComponent },
   { path: 'quotes', component: QuoteListComponent },
   { path: '', redirectTo: '/quotes', pathMatch: 'full' },
   { path: '**', redirectTo: '/quotes', pathMatch: 'full'}

@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class QuoteService {
 
+
   private url: string = 'http://localhost:8080/api/quotes'
 
   constructor(private httpClient: HttpClient) { }
@@ -26,6 +27,11 @@ export class QuoteService {
   filterPageableQuotes(sourceId: number, arg1: number, pageSize: number): Observable<GetResponseQuotes> {
     const quoteUrl = `${this.url}/search/findBySourceId?id=${sourceId}&page=${arg1}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+  }
+
+  deleteQuote(quoteId: number): Observable<Quote> {
+    const quoteUrl = `${this.url}/${quoteId}`;
+    return this.httpClient.delete<Quote>(quoteUrl);
   }
 
 }

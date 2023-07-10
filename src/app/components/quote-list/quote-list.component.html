@@ -2,9 +2,14 @@
     <div class="section-content section-content-p30">
             <div class="container-fluid">
 
-            <p *ngFor="let quote of quotes">
-                {{ quote.text }} - {{ quote.source.name }}
-            </p>
+            <!--
+            <div *ngFor="let quote of quotes">
+                <p>{{ quote.text }} - {{ quote.source.name }}</p>
+                <button class="btn btn-sm btn-danger" (click)="deleteQuote(quote.id)">Delete</button>
+            </div>
+            -->
+            
+
 
             <div class="container-fluid py-3">
             <table class="table table-bordered table-hover table-sm">

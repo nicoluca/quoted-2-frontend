@@ -98,8 +98,14 @@ export class QuoteListComponent {
     this.listQuotes();
   }
 
-  deleteQuote(arg0: number) {
-    throw new Error('Method not implemented.');
+  deleteQuote(quoteId: number) {
+    console.log(`Delete quote with id=${quoteId}...`);
+    this.quoteService.deleteQuote(quoteId).subscribe(
+      response => {
+        console.log(`Delete quote with id=${quoteId} response=${response.text}`);
+        this.listQuotes();
+      }
+    );
   }
 
 }

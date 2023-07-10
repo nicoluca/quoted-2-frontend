@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuoteService } from 'src/app/services/quote.service';
+import { SourceMenuComponent } from '../source-menu/source-menu.component';
 
 @Component({
   selector: 'app-add-quote',
@@ -27,7 +28,6 @@ export class AddQuoteComponent {
     // Set the input field back to placeholder text
     const inputField = document.getElementById('add-quote-input') as HTMLInputElement;
     inputField.value = this.placeholderText;
-
   }
 
 }

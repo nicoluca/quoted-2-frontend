@@ -9,6 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { QuoteService } from './services/quote.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SourceMenuComponent } from './components/source-menu/source-menu.component';
+import { AddQuoteComponent } from './components/add-quote/add-quote.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,8 @@ const routes: Routes = [
     AppComponent,
     QuoteListComponent,
     SearchComponent,
-    SourceMenuComponent
+    SourceMenuComponent,
+    AddQuoteComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

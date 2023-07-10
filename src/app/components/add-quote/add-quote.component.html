@@ -1,0 +1,6 @@
+<form class="form-header">
+    <input id="add-quote-input" #searchInput type="text"
+           class="au-input au-input-xl"
+           placeholder="Add quote..."
+           (keydown.enter)="addQuote(searchInput.value, $event)">
+</form>

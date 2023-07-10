@@ -9,7 +9,6 @@ import { map } from 'rxjs/operators';
 })
 export class QuoteService {
 
-
   private url: string = 'http://localhost:8080/api/quotes'
 
   constructor(private httpClient: HttpClient) { }
@@ -34,6 +33,11 @@ export class QuoteService {
     return this.httpClient.delete<Quote>(quoteUrl);
   }
 
+  addQuote(text: string): Observable<Quote> {
+    const quoteUrl = `${this.url}`;
+    return this.httpClient.post<Quote>(quoteUrl, { text });
+  }
+  
 }
 
 interface GetResponseQuotes {

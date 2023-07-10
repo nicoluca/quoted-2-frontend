@@ -12,6 +12,7 @@ import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 export class QuoteListComponent {
 
 
+
   quotes: Quote[] = []
 
   // pagination properties
@@ -106,6 +107,11 @@ export class QuoteListComponent {
         this.listQuotes();
       }
     );
+  }
+
+  updateQuote(arg0: number) {
+    // TODO Auto-generated method stub
+    throw new Error('Method not implemented.');
   }
 
 }

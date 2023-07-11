@@ -25,11 +25,12 @@
 
                     <tbody>
                         <tr *ngFor="let quote of quotes; index as i">
-                            <th scope="row">{{ (pageNumber - 1) * pageSize + i + 1 }}</th>
+                            <th scope="row">                                <i class="fa fa-trash"></i>
+                                {{ (pageNumber - 1) * pageSize + i + 1 }}</th>
                             <td class="">{{ quote.text }}</td>
                             <td class="">{{ quote.source == null ? 'No source' : quote.source.name }}</td>
                             <td>
-                                <button class="btn btn-sm btn-danger" (click)="deleteQuote(quote.id)">Delete</button>
+                                <fa-icon [icon]="faTrashAlt" (click)="deleteQuote(quote.id)"></fa-icon>
                                 <button class="btn btn-sm btn-primary" (click)="updateQuote(quote.id)">Update</button>
                             </td>
                         </tr>

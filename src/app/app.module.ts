@@ -10,6 +10,7 @@ import { QuoteService } from './services/quote.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SourceMenuComponent } from './components/source-menu/source-menu.component';
 import { AddQuoteComponent } from './components/add-quote/add-quote.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 const routes: Routes = [
@@ -34,7 +35,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     BrowserModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule
   ],
   providers: [QuoteService],
   bootstrap: [AppComponent]

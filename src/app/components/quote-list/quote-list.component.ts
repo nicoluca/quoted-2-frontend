@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Quote } from 'src/app/domain/quote';
 import { QuoteService } from 'src/app/services/quote.service';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -10,9 +11,12 @@ import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
   styleUrls: ['./quote-list.component.css']
 })
 export class QuoteListComponent {
-onSort($event: Event) {
-throw new Error('Method not implemented.');
-}
+  
+  faTrashAlt = faTrashAlt;
+
+  onSort($event: Event) {
+  throw new Error('Method not implemented.');
+  } 
 
   quotes: Quote[] = []
 

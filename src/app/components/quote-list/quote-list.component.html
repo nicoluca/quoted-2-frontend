@@ -16,10 +16,10 @@
 
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col" sortable="name" (sort)="onSort($event)">Quote</th>
-                            <th scope="col" sortable="name" (sort)="onSort($event)">Source</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col" class="text-center" sortable="name" (sort)="onSort($event)">Quote</th>
+                            <th scope="col" class="text-center"sortable="name" (sort)="onSort($event)">Source</th>
+                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                     </thead>
 
@@ -28,10 +28,10 @@
                             <th scope="row">                                <i class="fa fa-trash"></i>
                                 {{ (pageNumber - 1) * pageSize + i + 1 }}</th>
                             <td class="">{{ quote.text }}</td>
-                            <td class="">{{ quote.source == null ? 'No source' : quote.source.name }}</td>
-                            <td>
+                            <td class="text-center">{{ quote.source == null ? 'No source' : quote.source.name }}</td>
+                            <td class="text-center">
                                 <fa-icon [icon]="faTrashAlt" (click)="deleteQuote(quote.id)"></fa-icon>
-                                <button class="btn btn-sm btn-primary" (click)="updateQuote(quote.id)">Update</button>
+                                <fa-icon [icon]="faRefresh" (click)="updateQuote(quote.id)"></fa-icon>
                             </td>
                         </tr>
                     </tbody>

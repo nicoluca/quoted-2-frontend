@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Quote } from 'src/app/domain/quote';
 import { QuoteService } from 'src/app/services/quote.service';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faRefresh } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -12,7 +12,9 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 })
 export class QuoteListComponent {
   
+  // Font Awesome icons
   faTrashAlt = faTrashAlt;
+  faRefresh = faRefresh;
 
   onSort($event: Event) {
   throw new Error('Method not implemented.');

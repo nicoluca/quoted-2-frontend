@@ -22,6 +22,18 @@ export class SourceMenuComponent {
     private quoteService: QuoteService) { }
 
   ngOnInit(): void {
+    this.listSources();
+
+    // Subscribe to refresh event
+    this.sourceService.getRefresh().subscribe(
+      () => {
+        this.listSources();
+      }
+    );
+
+  }
+
+  listSources() {
     this.sourceService.getPageableSources(this.pageNumber - 1, this.pageSize).subscribe(
       this.processResult()
     );

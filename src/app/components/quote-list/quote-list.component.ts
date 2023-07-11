@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Quote } from 'src/app/domain/quote';
 import { QuoteService } from 'src/app/services/quote.service';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
-import { faTrashAlt, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faRefresh, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { SourceService } from 'src/app/services/source.service';
 
 
 @Component({
@@ -11,14 +12,12 @@ import { faTrashAlt, faRefresh } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./quote-list.component.css']
 })
 export class QuoteListComponent {
+
   
   // Font Awesome icons
   faTrashAlt = faTrashAlt;
   faRefresh = faRefresh;
-
-  onSort($event: Event) {
-  throw new Error('Method not implemented.');
-  } 
+  faEdit = faEdit;
 
   quotes: Quote[] = []
 
@@ -39,7 +38,11 @@ export class QuoteListComponent {
   // null source properties
   nullSourceMode: boolean = false;
 
+  // Quote to edit
+  quoteToEditId: number = 0;
+
   constructor(private quoteService: QuoteService,
+              private sourceService: SourceService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -141,9 +144,41 @@ export class QuoteListComponent {
     );
   }
 
-  updateQuote(arg0: number) {
-    // TODO Auto-generated method stub
-    throw new Error('Method not implemented.');
+  editQuote(quoteId: number) {
+    console.log(`Updating quote to edit with id=${quoteId}...`);
+    this.quoteToEditId = quoteId;
+    
   }
+
+  updateQuote(quoteId: number) {
+
+    // Retrieve values from inputs edit-quote-input and edit-source-input
+    let quoteText = (<HTMLInputElement>document.getElementById('edit-quote-input')).value;
+    let sourceName = (<HTMLInputElement>document.getElementById('edit-source-input')).value;
+
+    // If the user didn't enter a value for quoteText, use the original quoteText, find it in the quotes array
+    if (quoteText == '')
+      quoteText = this.quotes.find(q => q.id == quoteId)?.text ?? '';
+
+    // If the user didn't enter a value for sourceName, use the original sourceName, find it in the quotes array
+    if (sourceName == '')
+      sourceName = this.quotes.find(q => q.id == quoteId)?.source?.name ?? '';
+
+    console.log(`Updating quote with id=${quoteId} with quoteText=${quoteText} and sourceName=${sourceName}...`);
+    this.quoteService.updateQuote(quoteId, quoteText, sourceName).subscribe(
+      response => {
+        console.log(`Updated quote with id=${quoteId} response=${response.text}`);
+        this.quoteToEditId = 0;
+        this.listQuotes();
+        this.sourceService.refreshSources();
+      }
+    );
+
+    // Clear the quoteToEditId
+  }
+
+  onSort($event: Event) {
+    throw new Error('Method not implemented.');
+  } 
 
 }

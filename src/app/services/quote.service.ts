@@ -45,6 +45,11 @@ export class QuoteService {
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
 
+  updateQuote(quoteId: number, quoteText: string, sourceName: string): Observable<Quote> {
+    const quoteUrl = `${this.url}/${quoteId}`;
+    return this.httpClient.patch<Quote>(quoteUrl, { text: quoteText, source: { name: sourceName } });
+  }
+
   refreshQuotes() {
     this.refresh.next(true);
   }

@@ -18,21 +18,43 @@
                         <tr>
                             <th scope="col" class="text-center">#</th>
                             <th scope="col" class="text-center" sortable="name" (sort)="onSort($event)">Quote</th>
-                            <th scope="col" class="text-center"sortable="name" (sort)="onSort($event)">Source</th>
+                            <th scope="col" class="text-center" sortable="name" (sort)="onSort($event)">Source</th>
                             <th scope="col" class="text-center">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr *ngFor="let quote of quotes; index as i">
-                            <th scope="row">                                <i class="fa fa-trash"></i>
-                                {{ (pageNumber - 1) * pageSize + i + 1 }}</th>
-                            <td class="">{{ quote.text }}</td>
-                            <td class="text-center">{{ quote.source == null ? 'No source' : quote.source.name }}</td>
-                            <td class="text-center">
-                                <fa-icon [icon]="faTrashAlt" (click)="deleteQuote(quote.id)"></fa-icon>
-                                <fa-icon [icon]="faRefresh" (click)="updateQuote(quote.id)"></fa-icon>
+
+                            <th scope="row">                                
+                                {{ (pageNumber - 1) * pageSize + i + 1 }}
+                            </th>
+                            
+                            <td *ngIf="quoteToEditId == quote.id" class="">
+                                    <input id="edit-quote-input" #editInput type="text" class="au-input au-input-xl"
+                                        placeholder="{{ quote.text }}">
                             </td>
+
+                            <td *ngIf="quoteToEditId != quote.id" class="">
+                                {{ quote.text }}
+                            </td>
+
+                            <td *ngIf="quoteToEditId != quote.id" class="text-center">
+                                {{ quote.source == null ? '(No source)' : quote.source.name }}
+                            </td>
+
+                            <td *ngIf="quoteToEditId == quote.id" class="text-center">
+                                    <input id="edit-source-input" #editSource type="text" class="au-input au-input-xl"
+                                        placeholder="{{ quote.source == null ? '(No source)' : quote.source.name }}">
+                            </td>
+
+                            <td class="text-center">
+                                <fa-icon *ngIf="quoteToEditId != quote.id" [icon]="faEdit" (click)="editQuote(quote.id)"></fa-icon>
+                                <fa-icon *ngIf="quoteToEditId == quote.id" [icon]="faRefresh" (click)="updateQuote(quote.id)"></fa-icon>
+                                <fa-icon [icon]="faTrashAlt" (click)="deleteQuote(quote.id)"></fa-icon>
+                            </td>
+
+
                         </tr>
                     </tbody>
 

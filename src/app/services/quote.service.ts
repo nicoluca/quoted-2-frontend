@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Quote } from '../domain/quote';
 import { map } from 'rxjs/operators';
 
@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 export class QuoteService {
 
   private url: string = 'http://localhost:8080/api/quotes'
+
+  private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -41,6 +43,14 @@ export class QuoteService {
   getPageableQuotesWithNullSource(page: number, pageSize: number): Observable<GetResponseQuotes> {
     const quoteUrl = `${this.url}/search/findBySourceIsNull?page=${page}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+  }
+
+  refreshQuotes() {
+    this.refresh.next(true);
+  }
+
+  getRefresh(): Observable<boolean> {
+    return this.refresh.asObservable();
   }
   
 }

@@ -35,11 +35,11 @@ throw new Error('Method not implemented.');
 
   constructor(private quoteService: QuoteService,
               private route: ActivatedRoute,
-              private router: Router) {
-
-  }
+              private router: Router) { }
 
   ngOnInit(): void {
+
+    // Subscribe to router events to detect changes in the URL
     this.router.events.subscribe(val => {
       if (val instanceof RoutesRecognized) {
           this.searchMode = val.state.root.firstChild?.params.hasOwnProperty('keyword') ?? false;
@@ -53,17 +53,27 @@ throw new Error('Method not implemented.');
           this.listQuotes();
       }
     });
+
+    // Refresh the quote list when a new quote is added
+    this.quoteService.getRefresh().subscribe((value: boolean) => {
+      if (value) {
+        console.log('Detected change in quotes...');
+        this.listQuotes();
+      }
+    });
   }
 
   listQuotes() {
+
+    console.log(`Updating quotes with pageNumber=${this.pageNumber}, pageSize=${this.pageSize}`)
     if (this.searchMode)
       this.handleSearchQuotes(this.keyWord);
     else if (this.filterMode)
       this.handleFilterQuotes(this.sourceId);
     else if (this.nullSourceMode)
-      this.handleListQuotesWithNullSource();
+      this.handleQuotesWithNullSource();
     else
-      this.handleListQuotes();
+      this.handleAllQuotes();
   }
 
   handleSearchQuotes(keyword: string = '') {
@@ -87,14 +97,14 @@ throw new Error('Method not implemented.');
     );
   }
 
-  handleListQuotesWithNullSource() {
+  handleQuotesWithNullSource() {
     console.log('Querying quotes with null source...');
     this.quoteService.getPageableQuotesWithNullSource(this.pageNumber - 1, this.pageSize).subscribe(
       this.processResult()
     );
   }
 
-  handleListQuotes() {
+  handleAllQuotes() {
     this.quoteService.getPageableQuotes(this.pageNumber - 1, this.pageSize).subscribe(
       this.processResult()
     );
@@ -116,10 +126,10 @@ throw new Error('Method not implemented.');
   }
 
   deleteQuote(quoteId: number) {
-    console.log(`Delete quote with id=${quoteId}...`);
+    console.log(`Deleting quote with id=${quoteId}...`);
     this.quoteService.deleteQuote(quoteId).subscribe(
       response => {
-        console.log(`Delete quote with id=${quoteId} response=${response.text}`);
+        console.log(`Deletee quote with id=${quoteId} response=${response.text}`);
         this.listQuotes();
       }
     );

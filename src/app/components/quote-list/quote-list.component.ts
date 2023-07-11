@@ -10,8 +10,9 @@ import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
   styleUrls: ['./quote-list.component.css']
 })
 export class QuoteListComponent {
-
-
+onSort($event: Event) {
+throw new Error('Method not implemented.');
+}
 
   quotes: Quote[] = []
 

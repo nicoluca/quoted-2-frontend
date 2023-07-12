@@ -36,11 +36,12 @@
                             </td>
 
                             <td *ngIf="quoteToEditId != quote.id" class="">
-                                {{ quote.text }}
+                                <!-- {{ quote.text }} -->
+                                <div class="text-contaniner" [innerHtml]="quote.text| highlighter:searchTerm" ></div>
                             </td>
 
                             <td *ngIf="quoteToEditId != quote.id" class="text-center">
-                                {{ quote.source == null ? '(No source)' : quote.source.name }}
+                                <div class="text-contaniner" [innerHtml]="quote.source == null ? '(No source)' : quote.source.name | highlighter:searchTerm" ></div>
                             </td>
 
                             <td *ngIf="quoteToEditId == quote.id" class="text-center">

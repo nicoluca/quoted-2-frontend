@@ -4,6 +4,7 @@ import { QuoteService } from 'src/app/services/quote.service';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 import { faTrashAlt, faRefresh, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { SourceService } from 'src/app/services/source.service';
+import { SearchService } from 'src/app/services/search.service';
 
 
 @Component({
@@ -41,9 +42,14 @@ export class QuoteListComponent {
   // Quote to edit
   quoteToEditId: number = 0;
 
+  // Current search term
+  searchTerm: string = '';
+
+
 
   constructor(private quoteService: QuoteService,
               private sourceService: SourceService,
+              private searchService: SearchService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -71,6 +77,14 @@ export class QuoteListComponent {
         this.listQuotes();
       }
     });
+
+    // Subscribe to search term changes
+    this.searchService.getSearchTerm().subscribe((value: string) => {
+      this.searchTerm = value;
+      console.log(`Search term changed to ${this.searchTerm}`);
+    }
+    );
+
   }
 
   listQuotes() {

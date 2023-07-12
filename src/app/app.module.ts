@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SourceMenuComponent } from './components/source-menu/source-menu.component';
 import { AddQuoteComponent } from './components/add-quote/add-quote.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HighlighterPipe } from './pipes/highlighter.pipe';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
     QuoteListComponent,
     SearchComponent,
     SourceMenuComponent,
-    AddQuoteComponent
+    AddQuoteComponent,
+    HighlighterPipe
   ],
   imports: [
     RouterModule.forRoot(routes),

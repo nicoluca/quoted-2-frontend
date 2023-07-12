@@ -10,23 +10,24 @@ import { map } from 'rxjs/operators';
 export class QuoteService {
 
   private url: string = 'http://localhost:8080/api/quotes'
+  private urlSortSuffix: string = '?sort=datetimeCreated,desc';
 
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) { }
 
   getPageableQuotes(page: number, pageSize: number): Observable<GetResponseQuotes> {
-    const quoteUrl = `${this.url}?page=${page}&size=${pageSize}`;
+    const quoteUrl = `${this.url}${this.urlSortSuffix}&page=${page}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
 
   searchPageableQuotes(keyword: string, page: number, pageSize: number) {
-    const quoteUrl = `${this.url}/search/findByTextContainingIgnoreCase?text=${keyword}&page=${page}&size=${pageSize}`;
+    const quoteUrl = `${this.url}/search/findByTextContainingIgnoreCase${this.urlSortSuffix}&text=${keyword}&page=${page}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
 
   filterPageableQuotes(sourceId: number, arg1: number, pageSize: number): Observable<GetResponseQuotes> {
-    const quoteUrl = `${this.url}/search/findBySourceId?id=${sourceId}&page=${arg1}&size=${pageSize}`;
+    const quoteUrl = `${this.url}/search/findBySourceId${this.urlSortSuffix}&id=${sourceId}&page=${arg1}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
 
@@ -41,7 +42,7 @@ export class QuoteService {
   }
 
   getPageableQuotesWithNullSource(page: number, pageSize: number): Observable<GetResponseQuotes> {
-    const quoteUrl = `${this.url}/search/findBySourceIsNull?page=${page}&size=${pageSize}`;
+    const quoteUrl = `${this.url}/search/findBySourceIsNull?${this.urlSortSuffix}&page=${page}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
 

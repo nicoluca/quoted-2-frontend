@@ -41,6 +41,7 @@ export class QuoteListComponent {
   // Quote to edit
   quoteToEditId: number = 0;
 
+
   constructor(private quoteService: QuoteService,
               private sourceService: SourceService,
               private route: ActivatedRoute,
@@ -74,7 +75,7 @@ export class QuoteListComponent {
 
   listQuotes() {
 
-    console.log(`Updating quotes with pageNumber=${this.pageNumber}, pageSize=${this.pageSize}`)
+    console.log(`Getting quotes with pageNumber=${this.pageNumber}, pageSize=${this.pageSize}`)
     if (this.searchMode)
       this.handleSearchQuotes(this.keyWord);
     else if (this.filterMode)
@@ -114,6 +115,7 @@ export class QuoteListComponent {
   }
 
   handleAllQuotes() {
+    console.log('Querying all quotes...');
     this.quoteService.getPageableQuotes(this.pageNumber - 1, this.pageSize).subscribe(
       this.processResult()
     );

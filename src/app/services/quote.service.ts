@@ -22,7 +22,7 @@ export class QuoteService {
   }
 
   searchPageableQuotes(keyword: string, page: number, pageSize: number) {
-    const quoteUrl = `${this.url}/search/findByTextContainingIgnoreCase${this.urlSortSuffix}&text=${keyword}&page=${page}&size=${pageSize}`;
+    const quoteUrl = `${this.url}/search/findByTextContainingIgnoreCaseOrSourceNameContainingIgnoreCase${this.urlSortSuffix}&text=${keyword}&page=${page}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
 

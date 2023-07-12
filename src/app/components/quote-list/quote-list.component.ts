@@ -142,6 +142,7 @@ export class QuoteListComponent {
       response => {
         console.log(`Deletee quote with id=${quoteId} response=${response.text}`);
         this.listQuotes();
+        this.sourceService.refreshSources();
       }
     );
   }

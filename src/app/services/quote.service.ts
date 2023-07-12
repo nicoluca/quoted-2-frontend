@@ -32,7 +32,7 @@ export class QuoteService {
   }
 
   deleteQuote(quoteId: number): Observable<Quote> {
-    const quoteUrl = `${this.url}/${quoteId}`;
+    const quoteUrl = `http://localhost:8080/api/update-quote/${quoteId}`; // TODO config instead of hard-coded URL
     return this.httpClient.delete<Quote>(quoteUrl);
   }
 
@@ -47,7 +47,7 @@ export class QuoteService {
   }
 
   updateQuote(quoteId: number, quoteText: string, sourceName: string): Observable<Quote> {
-    const quoteUrl = `${this.url}/${quoteId}`;
+    const quoteUrl = `http://localhost:8080/api/update-quote/${quoteId}`; // TODO config instead of hard-coded URL
     return this.httpClient.patch<Quote>(quoteUrl, { text: quoteText, source: { name: sourceName } });
   }
 

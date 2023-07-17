@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Quote } from 'src/app/domain/quote';
 import { Source } from 'src/app/domain/source';
+import { DownloadService } from 'src/app/services/download.service';
 import { QuoteService } from 'src/app/services/quote.service';
 import { SourceService } from 'src/app/services/source.service';
 
@@ -19,7 +19,8 @@ export class SourceMenuComponent {
   totalElements: number = 0;
 
   constructor(private sourceService: SourceService,
-    private quoteService: QuoteService) { }
+    private quoteService: QuoteService,
+    private downloadService: DownloadService) { }
 
   ngOnInit(): void {
     this.listSources();
@@ -49,6 +50,19 @@ export class SourceMenuComponent {
     }
   }
 
+  exportQuotes() {
+    this.downloadService.downloadZip().subscribe(
+      (data: any) => {
+        const blob = new Blob([data], {type: 'application/zip'});
+
+        var downloadURL = window.URL.createObjectURL(data);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "quotes.zip";
+        link.click();
+      }
+    );
+  }
   
 }
 

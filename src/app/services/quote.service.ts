@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Quote } from '../domain/quote';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +49,7 @@ export class QuoteService {
     const quoteUrl = `http://localhost:8080/api/update-quote/${quoteId}`; // TODO config instead of hard-coded URL
     return this.httpClient.patch<Quote>(quoteUrl, { text: quoteText, source: { name: sourceName } });
   }
-
+  
   refreshQuotes() {
     this.refresh.next(true);
   }

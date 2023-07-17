@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuoteService } from 'src/app/services/quote.service';
-import { SourceMenuComponent } from '../source-menu/source-menu.component';
 
 @Component({
   selector: 'app-add-quote',

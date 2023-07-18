@@ -57,17 +57,8 @@ export class QuoteListComponent {
 
     // Subscribe to router events to detect changes in the URL
     this.router.events.subscribe(val => {
-      if (val instanceof RoutesRecognized) {
-          this.searchMode = val.state.root.firstChild?.params.hasOwnProperty('keyword') ?? false;
-          this.keyWord = val.state.root.firstChild?.params['keyword'] ?? '';
-
-          this.filterMode = val.state.root.firstChild?.params.hasOwnProperty('id') ?? false;
-          this.sourceId = val.state.root.firstChild?.params['id'] ?? 0;
-
-          this.nullSourceMode = val.state.root.firstChild?.params.hasOwnProperty('sourceIsNull') ?? false;
-          
-          this.listQuotes();
-      }
+      this.setModes();
+      this.listQuotes();
     });
 
     // Refresh the quote list when a new quote is added
@@ -80,24 +71,42 @@ export class QuoteListComponent {
 
     // Subscribe to search term changes
     this.searchService.getSearchTerm().subscribe((value: string) => {
-      this.searchTerm = value;
-      console.log(`Search term changed to ${this.searchTerm}`);
+      if (value != this.searchTerm) {
+        this.searchTerm = value;
+        console.log(`Search term changed to "${this.searchTerm}"`);
+      }
     }
     );
+  }
 
+  setModes() {
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    this.filterMode = this.route.snapshot.paramMap.has('id');
+    this.nullSourceMode = this.route.snapshot.paramMap.has('sourceIsNull');  
   }
 
   listQuotes() {
 
     console.log(`Getting quotes with pageNumber=${this.pageNumber}, pageSize=${this.pageSize}`)
-    if (this.searchMode)
+
+    if (this.searchMode) {
+      this.keyWord = this.route.snapshot.paramMap.get('keyword') ?? '';
+      console.log(`Search mode activated with keyword=${this.keyWord}`);
       this.handleSearchQuotes(this.keyWord);
-    else if (this.filterMode)
+    }
+    else if (this.filterMode) {
+      this.sourceId = Number(this.route.snapshot.paramMap.get('id'));
+      console.log(`Filter mode activated with sourceId=${this.sourceId}`);
       this.handleFilterQuotes(this.sourceId);
-    else if (this.nullSourceMode)
+    }
+    else if (this.nullSourceMode) {
+      console.log('Null source mode activated');
       this.handleQuotesWithNullSource();
-    else
+    }
+    else {
+      console.log('All quotes mode activated');
       this.handleAllQuotes();
+    }
   }
 
   handleSearchQuotes(keyword: string = '') {
@@ -199,3 +208,4 @@ export class QuoteListComponent {
   } 
 
 }
+

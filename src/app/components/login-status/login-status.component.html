@@ -1,0 +1,16 @@
+<div class="menu-sidebar-content js-scrollbar1">
+    <nav class="navbar-sidebar">
+        <ul class="list-unstyled navbar-list">
+            <li>
+            <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
+                Welcome back {{ userFullName }}!
+            </div>
+
+            <button *ngIf="!isAuthenticated" routerLink="/login" class="btn btn-sm btn-primary">Login</button>
+
+            <button *ngIf="isAuthenticated" (click)="logout()" class="btn btn-sm btn-primary">Logout</button>
+        </li>
+
+        </ul>
+    </nav>
+</div>

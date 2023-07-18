@@ -36,7 +36,6 @@
                             </td>
 
                             <td *ngIf="quoteToEditId != quote.id" class="">
-                                <!-- {{ quote.text }} -->
                                 <div class="text-contaniner" [innerHtml]="quote.text| highlighter:searchTerm" ></div>
                             </td>
 

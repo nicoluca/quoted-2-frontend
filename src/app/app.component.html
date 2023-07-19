@@ -3,12 +3,12 @@
   <!-- MENU SIDEBAR-->
   <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
-      <a routerLink="/products">
+      <a routerLink="/quotes">
         <img src="assets/images/logo.png" alt="Ponor, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons" class="img-responsive">
       </a>
     </div>
 
-    <app-sidebar></app-sidebar>
+    <app-sidebar *ngIf="isAuthenticated"></app-sidebar>
 
   </aside>
   <!-- END MENU SIDEBAR-->
@@ -18,7 +18,7 @@
     <header class="header-desktop">
       <div class="section-content section-content-p30">
         <div class="container-fluid">
-          <div class="header-wrap">
+          <div *ngIf="isAuthenticated" class="header-wrap">
 
             <app-search></app-search>
             <app-add-quote></app-add-quote>
@@ -30,6 +30,12 @@
       </div>
     </header>
     <!-- END HEADER DESKTOP-->
+
+    <div *ngIf="!isAuthenticated" class="main-content">
+      <h3>Please log in to see the content.</h3>
+      <hr>
+      <app-login></app-login>
+    </div>
 
     <!-- MAIN CONTENT-->
     <router-outlet></router-outlet>

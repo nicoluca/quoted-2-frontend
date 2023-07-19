@@ -42,13 +42,22 @@ function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
 const routes: Routes = [
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'quotes/byKeyword/:keyword', component: QuoteListComponent },
-  // { path: 'quotes/byKeyword/', component: QuoteListComponent},
-  { path: 'quotes/bySource/:id', component: QuoteListComponent },
-  { path: 'quotes/findBySourceIsNull/:sourceIsNull', component: QuoteListComponent },
-  { path: 'quotes', component: QuoteListComponent },
+  { path: 'quotes/byKeyword/:keyword', component: QuoteListComponent ,
+    canActivate: [OktaAuthGuard],
+    data: {onAuthRequired: sendToLoginPage} }, 
+  { path: 'quotes/bySource/:id', component: QuoteListComponent ,
+    canActivate: [OktaAuthGuard],
+    data: {onAuthRequired: sendToLoginPage} },
+  { path: 'quotes/findBySourceIsNull/:sourceIsNull', component: QuoteListComponent ,
+    canActivate: [OktaAuthGuard],
+    data: {onAuthRequired: sendToLoginPage} },
+  { path: 'quotes', component: QuoteListComponent,
+    canActivate: [OktaAuthGuard],
+    data: {onAuthRequired: sendToLoginPage} },
   { path: '', redirectTo: '/quotes', pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent,
+    canActivate: [OktaAuthGuard],
+    data: {onAuthRequired: sendToLoginPage} },
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
-            <p *ngFor="let source of sources">
+            <div *ngFor="let source of sources">
                 <a routerLink="quotes/bySource/{{ source.id }}" routerLinkActive="active-link">
                     {{ source.name }}
                 </a>
-            </p>
+            </div>

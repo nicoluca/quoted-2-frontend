@@ -45,6 +45,8 @@ export class QuoteListComponent {
   // Current search term
   searchTerm: string = '';
 
+  storage: Storage = sessionStorage;
+
 
 
   constructor(private quoteService: QuoteService,

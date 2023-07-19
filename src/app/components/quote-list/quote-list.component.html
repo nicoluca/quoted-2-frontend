@@ -2,15 +2,6 @@
     <div class="section-content section-content-p30">
         <div class="container-fluid">
 
-            <!--
-            <div *ngFor="let quote of quotes">
-                <p>{{ quote.text }} - {{ quote.source.name }}</p>
-                <button class="btn btn-sm btn-danger" (click)="deleteQuote(quote.id)">Delete</button>
-            </div>
-            -->
-
-
-
             <div class="container-fluid py-3">
                 <table class="table table-bordered table-hover table-sm">
 
@@ -60,6 +51,7 @@
 
                 </table>
             </div>
+            
             <!-- if quotes empty then display a message, the '?' is the safe navigation operator -->
             <div *ngIf="quotes?.length == 0" class="alert alert-warning col-md-12" role="alert">
                 No quotes found.

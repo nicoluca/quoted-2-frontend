@@ -26,6 +26,9 @@ import { LoginComponent } from './components/login/login.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SourceNavigationComponent } from './components/source-navigation/source-navigation.component';
+import { ExportComponent } from './components/export/export.component';
 
 const oktaConfig = config.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
@@ -58,7 +61,10 @@ const routes: Routes = [
     HighlighterPipe,
     LoginComponent,
     LoginStatusComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SidebarComponent,
+    SourceNavigationComponent,
+    ExportComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

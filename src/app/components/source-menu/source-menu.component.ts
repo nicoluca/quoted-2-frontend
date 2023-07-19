@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Source } from 'src/app/domain/source';
-import { DownloadService } from 'src/app/services/download.service';
-import { QuoteService } from 'src/app/services/quote.service';
 import { SourceService } from 'src/app/services/source.service';
 
 @Component({
@@ -18,9 +16,7 @@ export class SourceMenuComponent {
   pageSize: number = 1000; // TODO: Implement actual pagination
   totalElements: number = 0;
 
-  constructor(private sourceService: SourceService,
-    private quoteService: QuoteService,
-    private downloadService: DownloadService) { }
+  constructor(private sourceService: SourceService) { }
 
   ngOnInit(): void {
     this.listSources();
@@ -31,7 +27,6 @@ export class SourceMenuComponent {
         this.listSources();
       }
     );
-
   }
 
   listSources() {
@@ -40,7 +35,6 @@ export class SourceMenuComponent {
     );
   }
 
-
   processResult() {
     return (data: any) => {
       this.sources = data._embedded.sources;
@@ -48,20 +42,6 @@ export class SourceMenuComponent {
       this.pageSize = data.page.size;
       this.totalElements = data.page.totalElements;
     }
-  }
-
-  exportQuotes() {
-    this.downloadService.downloadZip().subscribe(
-      (data: any) => {
-        const blob = new Blob([data], {type: 'application/zip'});
-
-        var downloadURL = window.URL.createObjectURL(data);
-        var link = document.createElement('a');
-        link.href = downloadURL;
-        link.download = "quotes.zip";
-        link.click();
-      }
-    );
   }
   
 }

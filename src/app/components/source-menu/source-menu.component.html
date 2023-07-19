@@ -1,31 +1,5 @@
-<div class="menu-sidebar-content js-scrollbar1">
-    <nav class="navbar-sidebar">
-        <ul class="list-unstyled navbar-list">
-            <li>
-                <a routerLink="quotes" routerLinkActive="active-link">
-                    All Sources
-                </a>
-
-                <a routerLink="quotes/findBySourceIsNull/true"
-                    routerLinkActive="active-link">
-                    Quotes without source
-                </a>
-            </li>
-
-            <hr>
-
-            <li *ngFor="let source of sources">
-
+            <p *ngFor="let source of sources">
                 <a routerLink="quotes/bySource/{{ source.id }}" routerLinkActive="active-link">
                     {{ source.name }}
                 </a>
-
-            </li>
-
-            <hr>
-            <button class="btn btn-sm btn-primary" (click)="exportQuotes()">Export</button>
-
-
-        </ul>
-    </nav>
-</div>
+            </p>

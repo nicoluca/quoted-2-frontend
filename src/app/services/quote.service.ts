@@ -11,9 +11,18 @@ export class QuoteService {
   private url: string = 'http://localhost:8080/api/quotes'
   private urlSortSuffix: string = '?sort=datetimeCreated,desc';
 
+  storage: Storage = sessionStorage;
+
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) { }
+
+  getUserId(): number {
+    if (this.storage.getItem('userId'))
+      return JSON.parse(this.storage.getItem('userId')!);
+    else 
+      throw new Error('No user ID found in storage');
+  }
 
   getPageableQuotes(page: number, pageSize: number): Observable<GetResponseQuotes> {
     const quoteUrl = `${this.url}${this.urlSortSuffix}&page=${page}&size=${pageSize}`;
@@ -21,7 +30,7 @@ export class QuoteService {
   }
 
   searchPageableQuotes(keyword: string, page: number, pageSize: number) {
-    const quoteUrl = `${this.url}/search/findByTextContainingIgnoreCaseOrSourceNameContainingIgnoreCase${this.urlSortSuffix}&text=${keyword}&page=${page}&size=${pageSize}`;
+    const quoteUrl = `${this.url}/search/findByText${this.urlSortSuffix}&text=${keyword}&page=${page}&size=${pageSize}`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl);
   }
 

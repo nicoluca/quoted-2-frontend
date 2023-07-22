@@ -46,7 +46,7 @@ export class QuoteService {
     params = params.append('sort', this._sortParam);
     params = params.append('sourceId', sourceId.toString());
 
-    const quoteUrl = `${this._url}/findBySourece`;
+    const quoteUrl = `${this._url}/findBySource`;
     return this.httpClient.get<GetResponseQuotes>(quoteUrl, { params });
   }
 

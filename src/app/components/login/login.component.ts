@@ -27,6 +27,9 @@ export class LoginComponent implements OnInit {
         pkce: true,
         issuer: config.oidc.issuer,
         scopes: config.oidc.scopes
+      },
+      features: {
+        registration: config.oidc.features.registration
       }
     });
    }

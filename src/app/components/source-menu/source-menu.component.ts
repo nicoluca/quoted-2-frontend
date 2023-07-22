@@ -37,10 +37,10 @@ export class SourceMenuComponent {
 
   processResult() {
     return (data: any) => {
-      this.sources = data._embedded.sources;
-      this.pageNumber = data.page.number + 1; // Spring Data REST pages are 0-based
-      this.pageSize = data.page.size;
-      this.totalElements = data.page.totalElements;
+      this.sources = data.content;
+      this.pageNumber = data.number + 1; // Spring Data REST pages are 0-based
+      this.pageSize = data.size;
+      this.totalElements = data.totalElements;
     }
   }
   

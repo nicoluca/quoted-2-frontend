@@ -1,42 +1,46 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Source } from '../domain/source';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SourceService {
 
-  private url: string = 'http://localhost:8080/api/sources'
+  private _url: string = environment.source_url;
 
-  private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient) { }
 
+  
   getPageableSources(page: number, pageSize: number): Observable<GetResponseSources> {
-    const sourceUrl = `${this.url}?page=${page - 1}&size=${pageSize}`;
-    return this.httpClient.get<GetResponseSources>(sourceUrl);
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', pageSize.toString());
+
+    const sourceUrl = `${this._url}`;
+    return this._httpClient.get<GetResponseSources>(sourceUrl, { params });
   }
 
   refreshSources() {
-    this.refresh.next(true);
+    this._refresh.next(true);
   }
 
   getRefresh(): Observable<boolean> {
-    return this.refresh.asObservable();
+    return this._refresh.asObservable();
   }
 
 }
 
 interface GetResponseSources {
-  _embedded: {
+  content: {
     sources: Source[];
   },
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
-  }
+  size: number,
+  totalPage: number,
+  totalElements: number,
+  number: number
 }

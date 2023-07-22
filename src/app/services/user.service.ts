@@ -1,37 +1,29 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnInit{
 
-  userId: string = '';
-  storage: Storage = sessionStorage;
-  email: string = '';
+  private _url: string = environment.user_url;
 
-  url: string = 'http://localhost:8080/api/users/uuid';
 
-  private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  constructor(private _httpClient: HttpClient) { }
 
-  constructor(private httpClient: HttpClient) { }
-
-  getUUID(email: string): Observable<GetResponseUUID> {
-    const uuidUrl = `${this.url}?email=${email}`;
-    return this.httpClient.get<GetResponseUUID>(uuidUrl);
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
-  refreshUUID() {
-    this.refresh.next(true);
-  }
-
-  getRefresh(): Observable<boolean> {
-    return this.refresh.asObservable();
+  saveUser(email: string): Observable<GetResponseUser> {
+    const quoteUrl = `${this._url}`;
+    return this._httpClient.get<GetResponseUser>(quoteUrl);
   }
 
 }
 
-interface GetResponseUUID {
-  uuid: string;
+interface GetResponseUser {
+  email: string;
 }

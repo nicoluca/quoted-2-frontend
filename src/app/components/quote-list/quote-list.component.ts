@@ -67,11 +67,12 @@ export class QuoteListComponent {
     this.quoteService.getRefresh().subscribe((value: boolean) => {
       if (value) {
         console.log('Detected change in quotes...');
+        this.setModes();
         this.listQuotes();
       }
     });
 
-    // Subscribe to search term changes
+    // Subscribe to search term changs
     this.searchService.getSearchTerm().subscribe((value: string) => {
       if (value != this.searchTerm) {
         this.searchTerm = value;
@@ -148,10 +149,10 @@ export class QuoteListComponent {
 
   processResult() {
     return (data: any) => {
-      this.quotes = data._embedded.quotes;
-      this.pageNumber = data.page.number + 1; // Spring Data REST pages are 0-based
-      this.pageSize = data.page.size;
-      this.totalElements = data.page.totalElements;
+      this.quotes = data.content;
+      this.pageNumber = data.number + 1; // Spring Data REST pages are 0-based
+      this.pageSize = data.size
+      this.totalElements = data.totalElements;
     }
   }
 

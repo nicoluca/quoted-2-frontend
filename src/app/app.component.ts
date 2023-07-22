@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { UserService } from './services/user.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,40 +25,30 @@ export class AppComponent implements OnInit {
       (result) => {
         console.log('Authentication result: ', result.isAuthenticated);
         this.isAuthenticated = result.isAuthenticated!;
-        this.getUserDetails();
-      }
-    );
 
-    this.userService.getRefresh().subscribe(
-      () => {
-        if (this.isAuthenticated)
-          this.setUUID();
+        if (this.isAuthenticated) {
+          this.getUserDetails();
+          this.saveUser();
+        }
       }
     );
   }
-
-  setUUID() {
-    this.userService.getUUID(this.storage.getItem('userEmail')!).subscribe(
-      (data) => {
-        console.log(`Setting session storage UUID to ${data.uuid}`)
-        this.storage.setItem('uuid',  JSON.stringify(data.uuid));
+  saveUser() {
+    this.userService.saveUser(this.storage.getItem('userEmail') as string).subscribe(
+      (res) => {
+        console.log(`User saved: ${res.email}`);
       }
     );
   }
   
   getUserDetails() {
-    if (this.isAuthenticated) {
-      this.oktaAuth.getUser().then(
-        (res) => {
-          const email = res.email as string;
-          console.log(`Setting session storage userEmail to: ${email}`)
-          this.storage.setItem('userEmail', JSON.stringify(email));
-
-          this.userService.refreshUUID();
-        }
-      );
-    }
+    this.oktaAuth.getUser().then(
+      (res) => {
+        const email = res.email as string;
+        console.log(`Setting session storage userEmail to: ${email}`)
+        this.storage.setItem('userEmail', JSON.stringify(email));
+      }
+    );
   }
-
 
 }

@@ -1,82 +1,96 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Quote } from '../domain/quote';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuoteService {
 
-  private url: string = 'http://localhost:8080/api/quotes'
-  private urlSortSuffix: string = '?sort=datetimeCreated,desc';
+  private _url: string = environment.quote_url;
+  private _sortParam: string = environment.sort_param;
 
   storage: Storage = sessionStorage;
 
-  private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) { }
 
-  getUserId(): number {
-    if (this.storage.getItem('userId'))
-      return JSON.parse(this.storage.getItem('userId')!);
-    else 
-      throw new Error('No user ID found in storage');
-  }
-
   getPageableQuotes(page: number, pageSize: number): Observable<GetResponseQuotes> {
-    const quoteUrl = `${this.url}${this.urlSortSuffix}&page=${page}&size=${pageSize}`;
-    return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', pageSize.toString());
+    params = params.append('sort', this._sortParam);
+
+    const quoteUrl = `${this._url}`;
+    return this.httpClient.get<GetResponseQuotes>(quoteUrl, { params });
   }
 
   searchPageableQuotes(keyword: string, page: number, pageSize: number) {
-    const quoteUrl = `${this.url}/search/findByText${this.urlSortSuffix}&text=${keyword}&page=${page}&size=${pageSize}`;
-    return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', pageSize.toString());
+    params = params.append('sort', this._sortParam);
+    params = params.append('query', keyword);
+
+    const quoteUrl = `${this._url}/findByText`;
+    return this.httpClient.get<GetResponseQuotes>(quoteUrl, { params });
   }
 
-  filterPageableQuotes(sourceId: number, arg1: number, pageSize: number): Observable<GetResponseQuotes> {
-    const quoteUrl = `${this.url}/search/findBySourceId${this.urlSortSuffix}&id=${sourceId}&page=${arg1}&size=${pageSize}`;
-    return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+  filterPageableQuotes(sourceId: number, page: number, pageSize: number): Observable<GetResponseQuotes> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', pageSize.toString());
+    params = params.append('sort', this._sortParam);
+    params = params.append('sourceId', sourceId.toString());
+
+    const quoteUrl = `${this._url}/findBySourece`;
+    return this.httpClient.get<GetResponseQuotes>(quoteUrl, { params });
   }
 
   deleteQuote(quoteId: number): Observable<Quote> {
-    const quoteUrl = `http://localhost:8080/api/update-quote/${quoteId}`; // TODO config instead of hard-coded URL
+    const quoteUrl = `${this._url}/${quoteId}`;
     return this.httpClient.delete<Quote>(quoteUrl);
   }
 
   addQuote(text: string): Observable<Quote> {
-    const quoteUrl = `${this.url}`;
+    const quoteUrl = `${this._url}`;
     return this.httpClient.post<Quote>(quoteUrl, { text });
   }
 
   getPageableQuotesWithNullSource(page: number, pageSize: number): Observable<GetResponseQuotes> {
-    const quoteUrl = `${this.url}/search/findBySourceIsNull?${this.urlSortSuffix}&page=${page}&size=${pageSize}`;
-    return this.httpClient.get<GetResponseQuotes>(quoteUrl);
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', pageSize.toString());
+    params = params.append('sort', this._sortParam);
+
+    const quoteUrl = `${this._url}/findBySourceIsNull`;
+    return this.httpClient.get<GetResponseQuotes>(quoteUrl, { params });
   }
 
   updateQuote(quoteId: number, quoteText: string, sourceName: string): Observable<Quote> {
-    const quoteUrl = `http://localhost:8080/api/update-quote/${quoteId}`; // TODO config instead of hard-coded URL
+    const quoteUrl = `${this._url}/${quoteId}`;
     return this.httpClient.patch<Quote>(quoteUrl, { text: quoteText, source: { name: sourceName } });
   }
   
   refreshQuotes() {
-    this.refresh.next(true);
+    this._refresh.next(true);
   }
 
   getRefresh(): Observable<boolean> {
-    return this.refresh.asObservable();
+    return this._refresh.asObservable();
   }
   
 }
 
 interface GetResponseQuotes {
-  _embedded: {
+  content: {
     quotes: Quote[];
   },
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
-  }
+  size: number,
+  totalPage: number,
+  totalElements: number,
+  number: number
 }

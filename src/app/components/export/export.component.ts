@@ -12,8 +12,11 @@ export class ExportComponent {
 
 
   exportQuotes() {
+    console.log('Exporting quotes...');
+
     this.downloadService.downloadZip().subscribe(
       (data: any) => {
+        console.log('Received data: ', data);
         const blob = new Blob([data], {type: 'application/zip'});
 
         var downloadURL = window.URL.createObjectURL(data);

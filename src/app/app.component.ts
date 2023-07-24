@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
     );
   }
   saveUser() {
-    this.userService.saveUser(this.storage.getItem('userEmail') as string).subscribe(
+    this.userService.saveUser().subscribe(
       (res) => {
         console.log(`User saved: ${res.email}`);
       }

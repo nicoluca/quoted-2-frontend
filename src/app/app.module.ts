@@ -29,6 +29,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SourceNavigationComponent } from './components/source-navigation/source-navigation.component';
 import { ExportComponent } from './components/export/export.component';
+import { UserApiComponent } from './components/user-api/user-api.component';
 
 const oktaConfig = config.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
@@ -42,6 +43,7 @@ function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
 const routes: Routes = [
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'api-setup', component: UserApiComponent },
   { path: 'quotes/byKeyword/:keyword', component: QuoteListComponent ,
     canActivate: [OktaAuthGuard],
     data: {onAuthRequired: sendToLoginPage} }, 
@@ -73,7 +75,8 @@ const routes: Routes = [
     NotFoundComponent,
     SidebarComponent,
     SourceNavigationComponent,
-    ExportComponent
+    ExportComponent,
+    UserApiComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

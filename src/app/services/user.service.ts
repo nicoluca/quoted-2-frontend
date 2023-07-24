@@ -17,13 +17,22 @@ export class UserService implements OnInit{
     throw new Error('Method not implemented.');
   }
 
-  saveUser(email: string): Observable<GetResponseUser> {
+  saveUser(): Observable<GetResponseUser> {
     const quoteUrl = `${this._url}`;
     return this._httpClient.get<GetResponseUser>(quoteUrl);
+  }
+
+  getSecretNumber(): Observable<GetResponseSecret> {
+    const quoteUrl = `${this._url}/get-secret`;
+    return this._httpClient.get<GetResponseSecret>(quoteUrl);
   }
 
 }
 
 interface GetResponseUser {
   email: string;
+}
+
+interface GetResponseSecret {
+  secret: number;
 }

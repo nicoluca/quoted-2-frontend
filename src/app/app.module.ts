@@ -30,6 +30,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SourceNavigationComponent } from './components/source-navigation/source-navigation.component';
 import { ExportComponent } from './components/export/export.component';
 import { UserApiComponent } from './components/user-api/user-api.component';
+import { ImprintComponent } from './components/imprint/imprint.component';
 
 const oktaConfig = config.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
@@ -56,6 +57,7 @@ const routes: Routes = [
   { path: 'quotes', component: QuoteListComponent,
     canActivate: [OktaAuthGuard],
     data: {onAuthRequired: sendToLoginPage} },
+  {path: 'imprint', component: ImprintComponent},
   { path: '', redirectTo: '/quotes', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent,
     canActivate: [OktaAuthGuard],
@@ -76,7 +78,8 @@ const routes: Routes = [
     SidebarComponent,
     SourceNavigationComponent,
     ExportComponent,
-    UserApiComponent
+    UserApiComponent,
+    ImprintComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

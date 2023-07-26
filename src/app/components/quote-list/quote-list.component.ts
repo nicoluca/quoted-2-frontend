@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 import { faTrashAlt, faRefresh, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { SourceService } from 'src/app/services/source.service';
 import { SearchService } from 'src/app/services/search.service';
+import { first } from 'rxjs';
 
 
 @Component({
@@ -56,9 +57,10 @@ export class QuoteListComponent {
               private router: Router) { }
 
   ngOnInit(): void {
-
     // Subscribe to router events to detect changes in the URL
-    this.router.events.subscribe(val => {
+    this.router.events.pipe(first()).subscribe(val => {
+      console.log('Router event detected...');
+      
       this.setModes();
       this.listQuotes();
     });
@@ -89,7 +91,6 @@ export class QuoteListComponent {
   }
 
   listQuotes() {
-
     console.log(`Getting quotes with pageNumber=${this.pageNumber}, pageSize=${this.pageSize}`)
 
     if (this.searchMode) {
@@ -202,13 +203,7 @@ export class QuoteListComponent {
         this.sourceService.refreshSources();
       }
     );
-
-    // Clear the quoteToEditId
   }
-
-  onSort($event: Event) {
-    throw new Error('Method not implemented.');
-  } 
 
 }
 

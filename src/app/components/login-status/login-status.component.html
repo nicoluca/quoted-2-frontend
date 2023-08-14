@@ -1,6 +1,8 @@
 <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
-    Welcome back {{ userFullName }}!
+    Hello {{ userFullName }}!
 </div>
+
+<hr *ngIf="isAuthenticated">
 
 <button *ngIf="!isAuthenticated" routerLink="/login" class="btn btn-sm btn-primary">Login</button>
 

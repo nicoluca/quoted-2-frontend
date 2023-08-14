@@ -134,16 +134,14 @@ aside.menu-sidebar.d-none.d-lg-block.clr{
  */
 
 .header-desktop{
-    background:#5d5d5d;
-    -webkit-box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
-    -moz-box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
-    box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
+    background:#fff;
     position:fixed;
     top:0;
     right:0;
-    left:200px;
+    left:220px;
     height:75px;
-    z-index:3
+    z-index:3;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .header-desktop .section-content{
@@ -314,7 +312,7 @@ input.au-input.au-input-xl{
  */
 
 .menu-sidebar{
-    width:200px;
+    width:220px;
     position:fixed;
     left:0;
     top:0;
@@ -326,7 +324,7 @@ input.au-input.au-input-xl{
 .menu-sidebar .logo{
     background:#fff;
     height:75px;
-    padding:0 35px;
+    padding:0 50px;
     display:-webkit-box;
     display:-webkit-flex;
     display:-moz-box;
@@ -337,10 +335,13 @@ input.au-input.au-input-xl{
     -moz-box-align:center;
     -ms-flex-align:center;
     align-items:center;
+    /*
     -webkit-box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
     -moz-box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
     box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
     border-right:1px solid #e5e5e5;
+    */
+    border-bottom: 1px solid #e5e5e5;
     position:relative;
     z-index:3
 }
@@ -795,7 +796,7 @@ footer ul li{
         min-width:290px
     }
 }
-@media (max-width:1315px) and (min-width:992px){
+@media (max-width:1315px) and (min-width:900px){
     .header-desktop3 .section-content{
         padding:0 15px
     }
@@ -876,7 +877,7 @@ footer ul li{
         position:relative;
         top:0;
         left:0;
-        height:80px
+        height:75px
     }
     .header-wrap{
         -webkit-box-orient:vertical;

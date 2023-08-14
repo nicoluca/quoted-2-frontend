@@ -18,8 +18,8 @@ export class UserService implements OnInit{
   }
 
   saveUser(): Observable<GetResponseUser> {
-    const quoteUrl = `${this._url}`;
-    return this._httpClient.get<GetResponseUser>(quoteUrl);
+    const userUrl = `${this._url}`;
+    return this._httpClient.get<GetResponseUser>(userUrl);
   }
 
   getSecretNumber(): Observable<GetResponseSecret> {

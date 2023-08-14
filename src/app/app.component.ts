@@ -33,7 +33,10 @@ export class AppComponent implements OnInit {
       }
     );
   }
+
   saveUser() {
+    console.log('Saving user...');
+    
     this.userService.saveUser().subscribe(
       (res) => {
         console.log(`User saved: ${res.email}`);

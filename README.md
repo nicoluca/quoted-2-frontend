@@ -4,7 +4,7 @@
 
 Quoted lets you create, edit, search and export quotes.
 
-![Quoted]("assets/img/screenshot.png")
+![Quoted](assets/img/screenshot.png)
 
 
 ## Setup

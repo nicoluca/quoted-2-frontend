@@ -1,5 +1,20 @@
 # Quoted
 
+## About
+
+Quoted lets you create, edit, search and export quotes.
+
+![Quoted]("assets/img/screenshot.png")
+
+
+## Setup
+
+- Quoted uses [Okta](https://www.okta.com/) for authentication. You will need to create an Okta (dev) account and application to use Quoted. The backend will use JWT tokens to authenticate users using their Okta email address.
+- Quoted requires a Spring Boot backend. The backend is available [here](https://github.com/nicoluca/quoted-2).
+
+
+# Angular
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.1.
 
 ## Development server

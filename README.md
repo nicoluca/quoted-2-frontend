@@ -9,8 +9,9 @@ Quoted lets you create, edit, search and export quotes.
 
 ## Setup
 
-- Quoted uses [Okta](https://www.okta.com/) for authentication. You will need to create an Okta (dev) account and application to use Quoted. The backend will use JWT tokens to authenticate users using their Okta email address.
-- Quoted requires a Spring Boot backend. The backend is available [here](https://github.com/nicoluca/quoted-2).
+- Quoted uses [Okta](https://www.okta.com/) for authentication. You will need to create an Okta (dev) account and application to use Quoted. The backend will use JWT tokens to authenticate users using their Okta email address. You need to configure credentials accordingly in `src/app/config/config.ts.example` and remove the `.example` suffix.
+- Configure the environment variables in `src/environments/environment.ts.example` accordingly and remove the `.example` suffix.
+- Quoted requires a Spring Boot backend. The backend and its documentation are available [here](https://github.com/nicoluca/quoted-2).
 
 
 # Angular
